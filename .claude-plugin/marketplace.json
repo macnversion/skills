@@ -1,11 +1,11 @@
 {
   "name": "anthropic-agent-skills",
   "owner": {
-    "name": "Keith Lazuka",
-    "email": "klazuka@anthropic.com"
+    "name": "macnversion",
+    "email": "chuan.ma@qq.com"
   },
   "metadata": {
-    "description": "Anthropic example skills",
+    "description": "Anthropic skills",
     "version": "1.0.0"
   },
   "plugins": [
@@ -19,6 +19,15 @@
         "./skills/docx",
         "./skills/pptx",
         "./skills/pdf"
+      ]
+    },
+    {
+      "name": "video-skills",
+      "description": "Collection of video analysis capabilities including general analysis, key moments extraction, and product analysis",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/video-analysis"
       ]
     },
     {
