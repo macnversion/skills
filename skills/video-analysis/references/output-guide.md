@@ -2,6 +2,44 @@
 
 Quality standards and examples for video analysis output.
 
+## How to Interpret Results
+
+### General Analysis (`general`)
+
+| Field | Purpose | How to Use |
+|-------|---------|------------|
+| `overview` | 快速判断视频是否相关 | 决定是否需要进一步分析 |
+| `key_elements` | 了解视频中有什么 | 获取视频中的关键对象/人物 |
+| `actions` | 视频中发生的动作 | 了解活动流程 |
+| `summary` | 完整上下文 | 获得全面理解 |
+
+### Product Analysis (`product`)
+
+| Field | Purpose | How to Use |
+|-------|---------|------------|
+| `product_name` | 识别产品/功能名称 | 用于文档命名或引用 |
+| `main_function` | 产品主要功能 | 理解产品定位 |
+| `user_flow` | 用户操作步骤 | 创建用户手册或测试用例 |
+| `key_features` | 展示的功能列表 | 功能对比或营销材料 |
+
+### Key Nodes Analysis (`key_nodes`)
+
+| Field | Purpose | How to Use |
+|-------|---------|------------|
+| `timestamp` | 精确时间点 | 跳转到特定时刻 |
+| `description` | 时刻的详细描述 | 理解发生了什么 |
+| `importance` | 重要性等级 (high/medium/low) | 优先处理关键时刻 |
+| `type` | 时刻类型 | 按类型筛选 |
+
+### When Results Are Inadequate
+
+| 问题 | 解决方案 |
+|------|----------|
+| Overview 太简单，不够详细 | 考虑切换到 `product` 类型获取产品视角 |
+| 缺少时间信息 | 使用 `key_nodes` 类型获取时间戳 |
+| 需要提取特定信息 | 使用 `custom` 自定义提示词 |
+| 需要全面理解 | 组合使用多种分析类型 |
+
 ## Output Structure
 
 All analysis results follow this structure:

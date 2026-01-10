@@ -2,6 +2,26 @@
 
 Detailed usage guide for each analysis type.
 
+## Quick Decision Guide
+
+| 你的需求 | 推荐类型 | 命令 |
+|---------|---------|------|
+| 快速了解视频内容 | `general` | `analyzer.analyze_video(path, "general")` |
+| 分析产品功能 | `product` | `analyzer.analyze_video(path, "product")` |
+| 提取关键时间点 | `key_nodes` | `analyzer.analyze_video(path, "key_nodes")` |
+| 自定义分析 | `custom` | `analyzer.analyze_with_prompt(path, prompt)` |
+
+## Contents
+
+- [1. General Content Analysis](#1-general-content-analysis) - Quick video overview and summary
+- [2. Product/Functionality Analysis](#2-productfunctionality-analysis) - Product features and user flows
+- [3. Key Node Identification](#3-key-node-identification) - Timestamped key moments
+- [4. Custom Prompt Analysis](#4-custom-prompt-analysis) - Specialized analysis
+- [Choosing the Right Analysis Type](#choosing-the-right-analysis-type) - Decision guide
+- [Combining Analysis Types](#combining-analysis-types) - Advanced usage
+
+---
+
 ## 1. General Content Analysis
 
 Understand the overall content of a video including main subjects, actions, and context.
