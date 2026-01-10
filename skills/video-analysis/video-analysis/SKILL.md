@@ -1,6 +1,6 @@
 ---
 name: video-analysis
-description: AI-powered video content analysis capability using Volces ARK API. Use when Claude needs to analyze video files to understand their content, identify key moments, extract product features, or perform custom video analysis. Supports: (1) General content analysis, (2) Product/functionality analysis, (3) Key node identification, (4) Custom prompt analysis. Note: Requires ARK_API_KEY environment variable (Volces ARK API, OpenAI-compatible).
+description: "AI-powered video content analysis capability using Volces ARK API. Use when Claude needs to analyze video files to understand their content, identify key moments, extract product features, or perform custom video analysis. Supports: (1) General content analysis, (2) Product/functionality analysis, (3) Key node identification, (4) Custom prompt analysis. Note: Requires ARK_API_KEY environment variable (Volces ARK API, OpenAI-compatible)."
 ---
 
 # Video Analysis
