@@ -6,5 +6,5 @@
     "email": "chuan.ma@qq.com"
   },
   "version": "1.0.0",
-  "skills": ["video-analysis"]
+  "skills": "./skills"
 }
