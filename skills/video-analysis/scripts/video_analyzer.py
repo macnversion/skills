@@ -45,7 +45,7 @@ class VideoAnalyzer:
             raise ValueError("API key is required. Set ARK_API_KEY environment variable or pass api_key parameter")
 
         self.base_url = base_url or "https://ark.cn-beijing.volces.com/api/v3"
-        self.model = model or "ep-20251218111535-cwh2f"
+        self.model = model or "ep-20250912105916-n6xlt"
         self.temperature = 0.1
 
         self.client = OpenAI(
