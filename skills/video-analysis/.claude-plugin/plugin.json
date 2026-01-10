@@ -1,9 +1,0 @@
-{
-  "name": "video-analysis",
-  "description": "AI-powered video content analysis capability using Volces ARK API. Supports general content analysis, product/functionality analysis, key node identification, and custom prompt analysis.",
-  "author": {
-    "name": "macnversion",
-    "email": "chuan.ma@qq.com"
-  },
-  "version": "1.0.0"
-}
