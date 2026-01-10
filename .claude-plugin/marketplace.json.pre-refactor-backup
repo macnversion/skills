@@ -1,0 +1,45 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "mac-agent-skills",
+  "description": "Collection of Agent Skills for various tasks",
+  "owner": {
+    "name": "macnversion",
+    "email": "chuan.ma@qq.com"
+  },
+  "metadata": {
+    "description": "Agent Skills collection for creative, document, and development workflows",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "creative-skills",
+      "description": "Skills for creative and design work: algorithmic art using p5.js, brand guidelines, canvas design for posters and art, Slack GIF creation with optimization, professional theme application, and distinctive frontend design.",
+      "source": "./skills/creative",
+      "author": {
+        "name": "macnversion",
+        "email": "chuan.ma@qq.com"
+      },
+      "category": "design"
+    },
+    {
+      "name": "document-skills",
+      "description": "Comprehensive document processing skills: Word (DOCX) creation/editing with tracked changes, PDF text extraction and form filling, PowerPoint (PPTX) slide generation, and Excel (XLSX) spreadsheet manipulation with formulas.",
+      "source": "./skills/document",
+      "author": {
+        "name": "macnversion",
+        "email": "chuan.ma@qq.com"
+      },
+      "category": "productivity"
+    },
+    {
+      "name": "development-skills",
+      "description": "Skills for development workflows: MCP (Model Context Protocol) server building, web artifact creation with React/Tailwind, web application testing with Playwright, skill creation guidance, documentation co-authoring, and internal communications.",
+      "source": "./skills/development",
+      "author": {
+        "name": "macnversion",
+        "email": "chuan.ma@qq.com"
+      },
+      "category": "development"
+    }
+  ]
+}

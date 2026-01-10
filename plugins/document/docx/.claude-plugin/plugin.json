@@ -1,0 +1,10 @@
+{
+  "name": "docx",
+  "description": "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. When Claude needs to work with professional documents (.docx files) for: Creating new documents, Modifying or editing content, Working with tracked changes, Adding comments, or any other document tasks.",
+  "version": "1.0.0",
+  "author": {
+    "name": "macnversion",
+    "email": "chuan.ma@qq.com"
+  },
+  "category": "productivity"
+}
