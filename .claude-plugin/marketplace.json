@@ -1,6 +1,6 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "skills",
+  "name": "mac-skills",
   "description": "Collection of Agent Skills plugins for various tasks",
   "owner": {
     "name": "macnversion",

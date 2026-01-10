@@ -57,16 +57,16 @@ Each skill can be installed independently based on your needs:
 
 ```bash
 # Install specific skills
-/plugin install algorithmic-art@skills
-/plugin install frontend-design@skills
-/plugin install pdf@skills
-/plugin install mcp-builder@skills
+/plugin install algorithmic-art@mac-skills
+/plugin install frontend-design@mac-skills
+/plugin install pdf@mac-skills
+/plugin install mcp-builder@mac-skills
 ```
 
 Or use the interactive menu:
 1. Run `/plugin` to open the plugin manager
 2. Navigate to the **Discover** tab (or press Tab)
-3. Browse the available skills from the `skills` marketplace
+3. Browse the available skills from the `mac-skills` marketplace
 4. Select a skill to view its details
 5. Choose your installation scope (User, Project, or Local)
 6. Press Enter to install
@@ -153,23 +153,23 @@ skills/
 
 ### Disable/Enable Skills
 ```bash
-/plugin disable algorithmic-art@skills
-/plugin enable algorithmic-art@skills
+/plugin disable algorithmic-art@mac-skills
+/plugin enable algorithmic-art@mac-skills
 ```
 
 ### Uninstall Skills
 ```bash
-/plugin uninstall algorithmic-art@skills
+/plugin uninstall algorithmic-art@mac-skills
 ```
 
 ### Update Marketplace
 ```bash
-/plugin marketplace update skills
+/plugin marketplace update mac-skills
 ```
 
 ### Remove Marketplace
 ```bash
-/plugin marketplace remove skills
+/plugin marketplace remove mac-skills
 ```
 
 ## Creating Your Own Skills
