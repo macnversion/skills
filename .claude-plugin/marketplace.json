@@ -1,5 +1,7 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "machuan-agent-skills",
+  "description": "Agent skills for video analysis",
   "owner": {
     "name": "macnversion",
     "email": "chuan.ma@qq.com"
@@ -10,13 +12,14 @@
   },
   "plugins": [
     {
-      "name": "video-skills",
-      "description": "Collection of video analysis capabilities including general analysis, key moments extraction, and product analysis",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/video-analysis"
-      ]
+      "name": "video-analysis",
+      "description": "AI-powered video content analysis capability using Volces ARK API. Supports general content analysis, product/functionality analysis, key node identification, and custom prompt analysis.",
+      "source": "./skills/video-analysis",
+      "author": {
+        "name": "macnversion",
+        "email": "chuan.ma@qq.com"
+      },
+      "category": "development"
     }
   ]
 }
