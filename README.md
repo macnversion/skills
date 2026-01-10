@@ -15,7 +15,7 @@ For more information, check out:
 
 ## Skill Sets
 
-This repository organizes skills into four skill sets:
+This repository organizes skills into three skill sets:
 
 ### Creative Skills (`creative-skills`)
 Skills for creative and design work:
@@ -31,6 +31,7 @@ Comprehensive document processing skills:
 - **docx** - Word document creation, editing with tracked changes
 - **pdf** - PDF text extraction, form filling, merging
 - **pptx** - PowerPoint slide generation and editing
+- **video-analysis** - Video content analysis using Volces ARK API
 - **xlsx** - Excel spreadsheet manipulation with formulas
 
 ### Development Skills (`development-skills`)
@@ -41,10 +42,6 @@ Skills for development workflows:
 - **skill-creator** - Guide for creating effective skills
 - **doc-coauthoring** - Structured workflow for co-authoring documentation
 - **internal-comms** - Write internal communications (status reports, newsletters)
-
-### Video Analysis Skills (`video-analysis-skills`)
-AI-powered video content analysis:
-- **video-analysis** - Video content analysis using Volces ARK API with support for general analysis, product/functionality analysis, and key node identification
 
 ## Installation in Claude Code
 
@@ -67,9 +64,6 @@ Install individual skill sets based on your needs:
 
 # Install development skills
 /plugin install development-skills@mac-agent-skills
-
-# Install video analysis skills
-/plugin install video-analysis-skills@mac-agent-skills
 ```
 
 Or use the interactive menu:
@@ -103,6 +97,7 @@ skills/
 │   │   ├── docx/
 │   │   ├── pdf/
 │   │   ├── pptx/
+│   │   ├── video-analysis/
 │   │   └── xlsx/
 │   └── development/        # Development workflow skills
 │       ├── doc-coauthoring/
