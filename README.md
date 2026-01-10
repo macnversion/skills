@@ -1,66 +1,116 @@
-> **Note:** This repository contains Anthropic's implementation of skills for Claude. For information about the Agent Skills standard, see [agentskills.io](http://agentskills.io).
+> **Note:** For information about the Agent Skills standard, see [agentskills.io](https://agentskills.io).
 
-# Skills
-Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks. Skills teach Claude how to complete specific tasks in a repeatable way, whether that's creating documents with your company's brand guidelines, analyzing data using your organization's specific workflows, or automating personal tasks.
+# Agent Skills Collection
+
+A curated collection of Agent Skills organized into skill sets for Claude Code. Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks.
+
+## What Are Skills?
+
+Skills teach Claude how to complete specific tasks in a repeatable way—creating documents with brand guidelines, analyzing data using specific workflows, automating personal tasks, or building web applications.
 
 For more information, check out:
+- [Agent Skills Documentation](https://code.claude.com/docs/en/skills)
 - [What are skills?](https://support.claude.com/en/articles/12512176-what-are-skills)
 - [Using skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude)
-- [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills)
-- [Equipping agents for the real world with Agent Skills](https://anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
 
-# About This Repository
+## Skill Sets
 
-This repository contains skills that demonstrate what's possible with Claude's skills system. These skills range from creative applications (art, music, design) to technical tasks (testing web apps, MCP server generation) to enterprise workflows (communications, branding, etc.).
+This repository organizes skills into three main skill sets:
 
-Each skill is self-contained in its own folder with a `SKILL.md` file containing the instructions and metadata that Claude uses. Browse through these skills to get inspiration for your own skills or to understand different patterns and approaches.
+### Creative Skills (`creative-skills`)
+Skills for creative and design work:
+- **algorithmic-art** - Creating generative art using p5.js with seeded randomness
+- **brand-guidelines** - Applies official brand colors and typography
+- **canvas-design** - Create beautiful visual art in PNG and PDF documents
+- **frontend-design** - Create distinctive, production-grade frontend interfaces
+- **slack-gif-creator** - Create animated GIFs optimized for Slack
+- **theme-factory** - Apply professional font and color themes to artifacts
 
-Many skills in this repo are open source (Apache 2.0). We've also included the document creation & editing skills that power [Claude's document capabilities](https://www.anthropic.com/news/create-files) under the hood in the [`skills/docx`](./skills/docx), [`skills/pdf`](./skills/pdf), [`skills/pptx`](./skills/pptx), and [`skills/xlsx`](./skills/xlsx) subfolders. These are source-available, not open source, but we wanted to share these with developers as a reference for more complex skills that are actively used in a production AI application.
+### Document Skills (`document-skills`)
+Comprehensive document processing skills:
+- **docx** - Word document creation, editing with tracked changes
+- **pdf** - PDF text extraction, form filling, merging
+- **pptx** - PowerPoint slide generation and editing
+- **xlsx** - Excel spreadsheet manipulation with formulas
 
-## Disclaimer
+### Development Skills (`development-skills`)
+Skills for development workflows:
+- **mcp-builder** - Guide for creating MCP (Model Context Protocol) servers
+- **web-artifacts-builder** - Create web artifacts using React/Tailwind/shadcn
+- **webapp-testing** - Test local web applications using Playwright
+- **skill-creator** - Guide for creating effective skills
+- **doc-coauthoring** - Structured workflow for co-authoring documentation
+- **internal-comms** - Write internal communications (status reports, newsletters)
 
-**These skills are provided for demonstration and educational purposes only.** While some of these capabilities may be available in Claude, the implementations and behaviors you receive from Claude may differ from what is shown in these skills. These skills are meant to illustrate patterns and possibilities. Always test skills thoroughly in your own environment before relying on them for critical tasks.
+## Installation in Claude Code
 
-# Skill Sets
-- [./skills](./skills): Skill examples for Creative & Design, Development & Technical, Enterprise & Communication, and Document Skills
-- [./spec](./spec): The Agent Skills specification
-- [./template](./template): Skill template
+### Step 1: Add the Marketplace
 
-# Try in Claude Code, Claude.ai, and the API
-
-## Claude Code
-You can register this repository as a Claude Code Plugin marketplace by running the following command in Claude Code:
+```bash
+/plugin marketplace add macnversion/skills
 ```
-/plugin marketplace add anthropics/skills
+
+### Step 2: Install Skill Sets
+
+Install individual skill sets based on your needs:
+
+```bash
+# Install creative skills
+/plugin install creative-skills@macnagent-skills
+
+# Install document skills
+/plugin install document-skills@macnagent-skills
+
+# Install development skills
+/plugin install development-skills@macnagent-skills
 ```
 
-Then, to install a specific set of skills:
+Or use the interactive menu:
 1. Select `Browse and install plugins`
-2. Select `anthropic-agent-skills`
-3. Select `document-skills` or `example-skills`
+2. Select `macnagent-skills`
+3. Select the skill set you want to install
 4. Select `Install now`
 
-Alternatively, directly install either Plugin via:
+### Step 3: Use the Skills
+
+After installation, Claude automatically activates relevant skills based on your request. For example:
+- "Use the PDF skill to extract text from this file"
+- "Create a presentation about our Q4 results"
+- "Build a React dashboard with shadcn components"
+
+## Directory Structure
+
 ```
-/plugin install document-skills@anthropic-agent-skills
-/plugin install example-skills@anthropic-agent-skills
+skills/
+├── .claude-plugin/
+│   └── marketplace.json    # Plugin marketplace configuration
+├── skills/
+│   ├── creative/           # Creative & Design skills
+│   │   ├── algorithmic-art/
+│   │   ├── brand-guidelines/
+│   │   ├── canvas-design/
+│   │   ├── frontend-design/
+│   │   ├── slack-gif-creator/
+│   │   └── theme-factory/
+│   ├── document/           # Document processing skills
+│   │   ├── docx/
+│   │   ├── pdf/
+│   │   ├── pptx/
+│   │   └── xlsx/
+│   └── development/        # Development workflow skills
+│       ├── doc-coauthoring/
+│       ├── internal-comms/
+│       ├── mcp-builder/
+│       ├── skill-creator/
+│       ├── web-artifacts-builder/
+│       └── webapp-testing/
+├── spec/                   # Agent Skills specification
+└── template/               # Skill template
 ```
 
-After installing the plugin, you can use the skill by just mentioning it. For instance, if you install the `document-skills` plugin from the marketplace, you can ask Claude Code to do something like: "Use the PDF skill to extract the form fields from `path/to/some-file.pdf`"
+## Creating Your Own Skills
 
-## Claude.ai
-
-These example skills are all already available to paid plans in Claude.ai. 
-
-To use any skill from this repository or upload custom skills, follow the instructions in [Using skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude#h_a4222fa77b).
-
-## Claude API
-
-You can use Anthropic's pre-built skills, and upload custom skills, via the Claude API. See the [Skills API Quickstart](https://docs.claude.com/en/api/skills-guide#creating-a-skill) for more.
-
-# Creating a Basic Skill
-
-Skills are simple to create - just a folder with a `SKILL.md` file containing YAML frontmatter and instructions. You can use the **template-skill** in this repository as a starting point:
+Skills are simple to create—just a folder with a `SKILL.md` file:
 
 ```markdown
 ---
@@ -70,25 +120,27 @@ description: A clear description of what this skill does and when to use it
 
 # My Skill Name
 
-[Add your instructions here that Claude will follow when this skill is active]
+[Add your instructions here]
 
 ## Examples
 - Example usage 1
-- Example usage 2
 
 ## Guidelines
 - Guideline 1
-- Guideline 2
 ```
 
-The frontmatter requires only two fields:
-- `name` - A unique identifier for your skill (lowercase, hyphens for spaces)
-- `description` - A complete description of what the skill does and when to use it
+Use the [`template/`](./template) folder as a starting point.
 
-The markdown content below contains the instructions, examples, and guidelines that Claude will follow. For more details, see [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills).
+## Resources
 
-# Partner Skills
+- [Agent Skills Specification](https://agentskills.io/specification)
+- [Claude Code Skills Docs](https://code.claude.com/docs/en/skills)
+- [Best Practices Guide](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
 
-Skills are a great way to teach Claude how to get better at using specific pieces of software. As we see awesome example skills from partners, we may highlight some of them here:
+## License
 
-- **Notion** - [Notion Skills for Claude](https://www.notion.so/notiondevs/Notion-Skills-for-Claude-28da4445d27180c7af1df7d8615723d0)
+Each skill may have its own license. Please check individual skill folders for specific licensing information.
+
+---
+
+**Note:** These skills are provided for demonstration and educational purposes. Always test skills thoroughly in your own environment before relying on them for critical tasks.
