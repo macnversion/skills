@@ -1,10 +1,8 @@
 {
   "name": "video-analysis",
   "description": "AI-powered video content analysis capability using Volces ARK API. Use when Claude needs to analyze video files to understand their content, identify key moments, extract product features, or perform custom video analysis. Supports: General content analysis, Product/functionality analysis, Key node identification, Custom prompt analysis.",
-  "version": "1.0.0",
   "author": {
     "name": "macnversion",
     "email": "chuan.ma@qq.com"
-  },
-  "category": "productivity"
+  }
 }
