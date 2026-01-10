@@ -45,7 +45,6 @@
       "name": "video-analysis-skills",
       "description": "AI-powered video content analysis using Volces ARK API. Supports general content analysis, product/functionality analysis, key node identification, and custom prompt analysis.",
       "source": "./skills/video-analysis",
-      "skills": ["./skills"],
       "author": {
         "name": "macnversion",
         "email": "chuan.ma@qq.com"
