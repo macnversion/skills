@@ -15,7 +15,7 @@ For more information, check out:
 
 ## Skill Sets
 
-This repository organizes skills into three main skill sets:
+This repository organizes skills into four skill sets:
 
 ### Creative Skills (`creative-skills`)
 Skills for creative and design work:
@@ -42,6 +42,10 @@ Skills for development workflows:
 - **doc-coauthoring** - Structured workflow for co-authoring documentation
 - **internal-comms** - Write internal communications (status reports, newsletters)
 
+### Video Analysis Skills (`video-analysis-skills`)
+AI-powered video content analysis:
+- **video-analysis** - Video content analysis using Volces ARK API with support for general analysis, product/functionality analysis, and key node identification
+
 ## Installation in Claude Code
 
 ### Step 1: Add the Marketplace
@@ -56,18 +60,21 @@ Install individual skill sets based on your needs:
 
 ```bash
 # Install creative skills
-/plugin install creative-skills@macnagent-skills
+/plugin install creative-skills@mac-agent-skills
 
 # Install document skills
-/plugin install document-skills@macnagent-skills
+/plugin install document-skills@mac-agent-skills
 
 # Install development skills
-/plugin install development-skills@macnagent-skills
+/plugin install development-skills@mac-agent-skills
+
+# Install video analysis skills
+/plugin install video-analysis-skills@mac-agent-skills
 ```
 
 Or use the interactive menu:
 1. Select `Browse and install plugins`
-2. Select `macnagent-skills`
+2. Select `mac-agent-skills`
 3. Select the skill set you want to install
 4. Select `Install now`
 
@@ -104,6 +111,8 @@ skills/
 │       ├── skill-creator/
 │       ├── web-artifacts-builder/
 │       └── webapp-testing/
+│   └── video-analysis/      # Video content analysis skills
+│       └── video-analysis/
 ├── spec/                   # Agent Skills specification
 └── template/               # Skill template
 ```
