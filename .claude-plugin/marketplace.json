@@ -1,0 +1,123 @@
+{
+    "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+    "name": "mac-skills",
+    "description": "Collection of Agent Skills for various tasks",
+    "owner": {
+        "name": "macnversion",
+        "email": "chuan.ma@qq.com"
+    },
+    "metadata": {
+        "description": "Agent Skills collection for creative, document, and development workflows",
+        "version": "3.0.0"
+    },
+    "plugins": [
+        {
+            "name": "algorithmic-art",
+            "description": "Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration.",
+            "source": "./skills/algorithmic-art",
+            "category": "creative"
+        },
+        {
+            "name": "brand-guidelines",
+            "description": "Applies Anthropic's official brand colors and typography to any sort of artifact.",
+            "source": "./skills/brand-guidelines",
+            "category": "creative"
+        },
+        {
+            "name": "canvas-design",
+            "description": "Create beautiful visual art in .png and .pdf documents using design philosophy.",
+            "source": "./skills/canvas-design",
+            "category": "creative"
+        },
+        {
+            "name": "frontend-design",
+            "description": "Create distinctive, production-grade frontend interfaces with high design quality.",
+            "source": "./skills/frontend-design",
+            "category": "creative"
+        },
+        {
+            "name": "slack-gif-creator",
+            "description": "Knowledge and utilities for creating animated GIFs optimized for Slack.",
+            "source": "./skills/slack-gif-creator",
+            "category": "creative"
+        },
+        {
+            "name": "theme-factory",
+            "description": "Toolkit for styling artifacts with a theme. 10 pre-set themes with colors/fonts.",
+            "source": "./skills/theme-factory",
+            "category": "creative"
+        },
+        {
+            "name": "docx",
+            "description": "Comprehensive document creation, editing, and analysis for .docx files.",
+            "source": "./skills/docx",
+            "category": "productivity"
+        },
+        {
+            "name": "pdf",
+            "description": "Comprehensive PDF manipulation toolkit for extracting text, creating, merging, and handling forms.",
+            "source": "./skills/pdf",
+            "category": "productivity"
+        },
+        {
+            "name": "pptx",
+            "description": "Presentation creation, editing, and analysis for .pptx files.",
+            "source": "./skills/pptx",
+            "category": "productivity"
+        },
+        {
+            "name": "video-analysis",
+            "description": "AI-powered video content analysis using Volces ARK API for video understanding.",
+            "source": "./skills/video-analysis",
+            "category": "productivity"
+        },
+        {
+            "name": "xlsx",
+            "description": "Comprehensive spreadsheet creation, editing, and analysis for .xlsx files.",
+            "source": "./skills/xlsx",
+            "category": "productivity"
+        },
+        {
+            "name": "doc-coauthoring",
+            "description": "Guide users through a structured workflow for co-authoring documentation.",
+            "source": "./skills/doc-coauthoring",
+            "category": "development"
+        },
+        {
+            "name": "internal-comms",
+            "description": "Resources for writing internal communications like status reports and updates.",
+            "source": "./skills/internal-comms",
+            "category": "development"
+        },
+        {
+            "name": "mcp-builder",
+            "description": "Guide for creating high-quality MCP servers in Python or TypeScript.",
+            "source": "./skills/mcp-builder",
+            "category": "development"
+        },
+        {
+            "name": "skill-creator",
+            "description": "Guide for creating effective skills that extend Claude's capabilities.",
+            "source": "./skills/skill-creator",
+            "category": "development"
+        },
+        {
+            "name": "web-artifacts-builder",
+            "description": "Tools for creating multi-component HTML artifacts using React, Tailwind, shadcn/ui.",
+            "source": "./skills/web-artifacts-builder",
+            "category": "development"
+        },
+        {
+            "name": "webapp-testing",
+            "description": "Toolkit for interacting with and testing local web applications using Playwright.",
+            "source": "./skills/webapp-testing",
+            "category": "development"
+        },
+        {
+            "name": "json-canvas",
+            "description": "Create and manipulate Obsidian JSON Canvas files for visual knowledge organization.",
+            "source": "./skills/json-canvas",
+            "category": "productivity"
+        }
+    ]
+}

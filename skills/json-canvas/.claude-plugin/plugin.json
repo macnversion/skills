@@ -1,0 +1,8 @@
+{
+  "name": "json-canvas",
+  "description": "Create and edit JSON Canvas files (.canvas) for Obsidian Canvas. Use when: (1) Creating new .canvas files, (2) Editing existing canvas documents, (3) Building mind maps, flowcharts, kanban boards, or ",
+  "author": {
+    "name": "macnversion",
+    "email": "chuan.ma@qq.com"
+  }
+}

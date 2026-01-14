@@ -1,0 +1,8 @@
+{
+  "name": "mcp-builder",
+  "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate externa",
+  "author": {
+    "name": "macnversion",
+    "email": "chuan.ma@qq.com"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "video-analysis",
+  "description": "AI-powered video understanding and analysis toolkit. Use this skill when Claude needs to: (1) Analyze video files (.mp4, .mov, .avi, .mkv, .webm, screen recordings), (2) Extract video content or summa",
+  "author": {
+    "name": "macnversion",
+    "email": "chuan.ma@qq.com"
+  }
+}
