@@ -280,11 +280,7 @@ description: "技能描述，Claude 根据此决定何时调用该技能"
 
 ```
 video-analysis/
-├── .claude-plugin/
-│   └── plugin.json
-├── SKILL.md
-├── LICENSE.txt
-├── requirements.txt
+├── SKILL.md               # (必需) 入口文件
 ├── scripts/
 │   ├── video_analyzer.py
 │   ├── prompt_manager.py
@@ -299,6 +295,20 @@ video-analysis/
     ├── error-handling.md
     └── output-guide.md
 ```
+
+### 安装 Skills
+
+将 skill 文件夹复制到 `~/.claude/skills/` 目录：
+
+```bash
+# 安装单个 skill
+cp -r skills/video-analysis ~/.claude/skills/
+
+# 安装所有 skills (从本仓库)
+cp -r skills/* ~/.claude/skills/
+```
+
+> **注意**：Skills 是知识文件夹，Claude 会根据 `description` 自动识别何时加载，无需手动调用。
 
 ---
 

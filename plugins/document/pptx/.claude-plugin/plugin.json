@@ -1,8 +1,0 @@
-{
-  "name": "pptx",
-  "description": "Presentation creation, editing, and analysis. When Claude needs to work with presentations (.pptx files) for: Creating new presentations, Modifying or editing content, Working with layouts, Adding comments or speaker notes, or any other presentation tasks.",
-  "author": {
-    "name": "macnversion",
-    "email": "chuan.ma@qq.com"
-  }
-}

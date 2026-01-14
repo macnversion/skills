@@ -1,8 +1,0 @@
-{
-  "name": "video-analysis",
-  "description": "AI-powered video content analysis. Use this skill when user asks to analyze video files, extract video content, summarize videos, identify key moments in videos, analyze product demos from video, or perform any video understanding task. Supports: general video summary, product feature extraction, key moment identification with timestamps, and custom prompt-based analysis.",
-  "author": {
-    "name": "macnversion",
-    "email": "chuan.ma@qq.com"
-  }
-}
