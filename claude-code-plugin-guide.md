@@ -230,6 +230,78 @@ rm -rf ~/.claude/plugins/cache
 
 ---
 
+## 技能文件夹结构最佳实践
+
+根据 Claude Code 官方文档，每个技能（Skill）应该是一个独立的文件夹，采用**渐进式披露（Progressive Disclosure）**架构来优化 token 使用。
+
+### 标准目录结构
+
+```
+skill-name/
+├── SKILL.md           # (必需) 入口文件，包含 YAML frontmatter 和核心指令
+├── scripts/           # (可选) 可执行脚本 (Python, Bash)
+├── references/        # (可选) 详细文档、API schema、参考资料
+├── assets/            # (可选) 模板、图标、字体等资源文件
+└── templates/         # (可选) 结构化 prompt 或输出格式
+```
+
+### SKILL.md 文件规范
+
+```yaml
+---
+name: skill-name
+description: "技能描述，Claude 根据此决定何时调用该技能"
+---
+
+# 技能标题
+
+核心指令和使用说明...
+```
+
+### 渐进式披露原则
+
+| 阶段 | 加载内容 | 说明 |
+|------|---------|------|
+| **发现** | 仅读取 `name` + `description` | 轻量级，消耗极少 token |
+| **调用** | 加载完整的 `SKILL.md` 内容 | 核心指令 |
+| **按需** | 仅在需要时加载 `references/` 中的文件 | 优化 token 使用 |
+
+### 最佳实践
+
+| 建议 | 说明 |
+|------|------|
+| `SKILL.md` 保持简洁 | 建议 < 500 行，复杂内容放 `references/` |
+| 使用 `references/` 文件夹 | 存放详细参考文档，而非根目录 `.md` 文件 |
+| 避免深层嵌套引用 | 保持一级深度，不要 `A.md` → `B.md` → `C.md` |
+| 长文档加目录 | `references/` 中 > 100 行的文件应有目录 |
+| 信息不重复 | 内容只在一处存在（`SKILL.md` 或 `references/`） |
+
+### 示例：视频分析技能
+
+```
+video-analysis/
+├── .claude-plugin/
+│   └── plugin.json
+├── SKILL.md
+├── LICENSE.txt
+├── requirements.txt
+├── scripts/
+│   ├── video_analyzer.py
+│   ├── prompt_manager.py
+│   ├── response_extractor.py
+│   └── prompts/
+│       ├── general_analysis.md
+│       ├── key_nodes.md
+│       └── product_analysis.md
+└── references/
+    ├── analysis-types.md
+    ├── api-reference.md
+    ├── error-handling.md
+    └── output-guide.md
+```
+
+---
+
 ## 命令速查表
 
 ### 市场命令
