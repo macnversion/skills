@@ -11,10 +11,16 @@ This module provides the main video analysis capabilities including:
 
 import json
 import os
+import sys
 import time
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, Optional, List
+
+# Add script directory to path for local imports
+_script_dir = Path(__file__).parent
+if str(_script_dir) not in sys.path:
+    sys.path.insert(0, str(_script_dir))
 
 try:
     from openai import OpenAI

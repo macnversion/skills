@@ -232,18 +232,55 @@ rm -rf ~/.claude/plugins/cache
 
 ## 技能文件夹结构最佳实践
 
-根据 Claude Code 官方文档，每个技能（Skill）应该是一个独立的文件夹，采用**渐进式披露（Progressive Disclosure）**架构来优化 token 使用。
+根据 Claude Code 官方文档，技能（Skill）可以通过两种方式组织和使用。
 
-### 标准目录结构
+### 模式 A：独立 Skill（直接复制安装）
+
+每个 skill 是一个独立文件夹，直接包含 `SKILL.md`：
 
 ```
 skill-name/
-├── SKILL.md           # (必需) 入口文件，包含 YAML frontmatter 和核心指令
-├── scripts/           # (可选) 可执行脚本 (Python, Bash)
-├── references/        # (可选) 详细文档、API schema、参考资料
-├── assets/            # (可选) 模板、图标、字体等资源文件
-└── templates/         # (可选) 结构化 prompt 或输出格式
+├── SKILL.md           # (必需) 入口文件
+├── scripts/           # (可选) 可执行脚本
+├── references/        # (可选) 参考文档
+└── templates/         # (可选) 模板文件
 ```
+
+**安装方式**：复制到 `~/.claude/skills/`
+
+```bash
+cp -r skill-name ~/.claude/skills/
+```
+
+---
+
+### 模式 B：Plugin 包含 Skill（Marketplace 管理）
+
+通过 Marketplace 分发时，每个 Plugin 内需要有 `skills/` 子目录：
+
+```
+marketplace-repo/
+├── .claude-plugin/
+│   └── marketplace.json       # Marketplace 定义
+└── skills/                    # 插件容器（每个子目录是一个 Plugin）
+    └── video-analysis/        # 单个 Plugin
+        ├── .claude-plugin/
+        │   └── plugin.json    # Plugin 元数据
+        └── skills/            # Plugin 内的 Skills
+            └── video-analysis/
+                ├── SKILL.md   # Skill 入口
+                ├── scripts/
+                └── references/
+```
+
+**安装方式**：通过 Marketplace 安装
+
+```bash
+/plugin marketplace add owner/repo
+/plugin install video-analysis@marketplace-name
+```
+
+---
 
 ### SKILL.md 文件规范
 
@@ -271,42 +308,9 @@ description: "技能描述，Claude 根据此决定何时调用该技能"
 | 建议 | 说明 |
 |------|------|
 | `SKILL.md` 保持简洁 | 建议 < 500 行，复杂内容放 `references/` |
-| 使用 `references/` 文件夹 | 存放详细参考文档，而非根目录 `.md` 文件 |
-| 避免深层嵌套引用 | 保持一级深度，不要 `A.md` → `B.md` → `C.md` |
+| 使用 `references/` 文件夹 | 存放详细参考文档 |
+| 避免深层嵌套引用 | 保持一级深度 |
 | 长文档加目录 | `references/` 中 > 100 行的文件应有目录 |
-| 信息不重复 | 内容只在一处存在（`SKILL.md` 或 `references/`） |
-
-### 示例：视频分析技能
-
-```
-video-analysis/
-├── SKILL.md               # (必需) 入口文件
-├── scripts/
-│   ├── video_analyzer.py
-│   ├── prompt_manager.py
-│   ├── response_extractor.py
-│   └── prompts/
-│       ├── general_analysis.md
-│       ├── key_nodes.md
-│       └── product_analysis.md
-└── references/
-    ├── analysis-types.md
-    ├── api-reference.md
-    ├── error-handling.md
-    └── output-guide.md
-```
-
-### 安装 Skills
-
-将 skill 文件夹复制到 `~/.claude/skills/` 目录：
-
-```bash
-# 安装单个 skill
-cp -r skills/video-analysis ~/.claude/skills/
-
-# 安装所有 skills (从本仓库)
-cp -r skills/* ~/.claude/skills/
-```
 
 > **注意**：Skills 是知识文件夹，Claude 会根据 `description` 自动识别何时加载，无需手动调用。
 
