@@ -10,36 +10,84 @@
   },
   "plugins": [
     {
-      "name": "document-skills",
-      "description": "Collection of document processing suite including Excel, Word, PowerPoint, and PDF capabilities",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/xlsx",
-        "./skills/docx",
-        "./skills/pptx",
-        "./skills/pdf"
-      ]
+      "name": "algorithmic-art",
+      "description": "Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration.",
+      "source": "./skills/algorithmic-art"
     },
     {
-      "name": "example-skills",
-      "description": "Collection of example skills demonstrating various capabilities including skill creation, MCP building, visual design, algorithmic art, internal communications, web testing, artifact building, Slack GIFs, and theme styling",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./skills/algorithmic-art",
-        "./skills/brand-guidelines",
-        "./skills/canvas-design",
-        "./skills/doc-coauthoring",
-        "./skills/frontend-design",
-        "./skills/internal-comms",
-        "./skills/mcp-builder",
-        "./skills/skill-creator",
-        "./skills/slack-gif-creator",
-        "./skills/theme-factory",
-        "./skills/web-artifacts-builder",
-        "./skills/webapp-testing"
-      ]
+      "name": "brand-guidelines",
+      "description": "Applies Anthropic's official brand colors and typography to any sort of artifact.",
+      "source": "./skills/brand-guidelines"
+    },
+    {
+      "name": "canvas-design",
+      "description": "Create beautiful visual art in .png and .pdf documents using design philosophy.",
+      "source": "./skills/canvas-design"
+    },
+    {
+      "name": "frontend-design",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality.",
+      "source": "./skills/frontend-design"
+    },
+    {
+      "name": "slack-gif-creator",
+      "description": "Knowledge and utilities for creating animated GIFs optimized for Slack.",
+      "source": "./skills/slack-gif-creator"
+    },
+    {
+      "name": "theme-factory",
+      "description": "Toolkit for styling artifacts with a theme. 10 pre-set themes with colors/fonts.",
+      "source": "./skills/theme-factory"
+    },
+    {
+      "name": "docx",
+      "description": "Comprehensive document creation, editing, and analysis for .docx files.",
+      "source": "./skills/docx"
+    },
+    {
+      "name": "pdf",
+      "description": "Comprehensive PDF manipulation toolkit for extracting text, creating, merging, and handling forms.",
+      "source": "./skills/pdf"
+    },
+    {
+      "name": "pptx",
+      "description": "Presentation creation, editing, and analysis for .pptx files.",
+      "source": "./skills/pptx"
+    },
+    {
+      "name": "xlsx",
+      "description": "Comprehensive spreadsheet creation, editing, and analysis for .xlsx files.",
+      "source": "./skills/xlsx"
+    },
+    {
+      "name": "doc-coauthoring",
+      "description": "Guide users through a structured workflow for co-authoring documentation.",
+      "source": "./skills/doc-coauthoring"
+    },
+    {
+      "name": "internal-comms",
+      "description": "Resources for writing internal communications like status reports and updates.",
+      "source": "./skills/internal-comms"
+    },
+    {
+      "name": "mcp-builder",
+      "description": "Guide for creating high-quality MCP servers in Python or TypeScript.",
+      "source": "./skills/mcp-builder"
+    },
+    {
+      "name": "skill-creator",
+      "description": "Guide for creating effective skills that extend Claude's capabilities.",
+      "source": "./skills/skill-creator"
+    },
+    {
+      "name": "web-artifacts-builder",
+      "description": "Tools for creating multi-component HTML artifacts using React, Tailwind, shadcn/ui.",
+      "source": "./skills/web-artifacts-builder"
+    },
+    {
+      "name": "webapp-testing",
+      "description": "Toolkit for interacting with and testing local web applications using Playwright.",
+      "source": "./skills/webapp-testing"
     }
   ]
 }
