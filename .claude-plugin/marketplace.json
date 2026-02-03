@@ -1,11 +1,11 @@
 {
-  "name": "anthropic-agent-skills",
+  "name": "mac-skills",
   "owner": {
-    "name": "Keith Lazuka",
-    "email": "klazuka@anthropic.com"
+    "name": "macnversion",
+    "email": "chuan.ma@qq.com"
   },
   "metadata": {
-    "description": "Anthropic example skills",
+    "description": "Macnversion's fork of Anthropic example skills",
     "version": "1.0.0"
   },
   "plugins": [
