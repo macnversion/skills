@@ -1,94 +1,126 @@
-> **Note:** This repository contains Anthropic's implementation of skills for Claude. For information about the Agent Skills standard, see [agentskills.io](http://agentskills.io).
+# Agent Skills (Macnversion Fork)
 
-# Skills
-Skills are folders of instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks. Skills teach Claude how to complete specific tasks in a repeatable way, whether that's creating documents with your company's brand guidelines, analyzing data using your organization's specific workflows, or automating personal tasks.
+本项目是 Anthropic Agent Skills 的 Fork 版本，旨在收集和管理适用于 AI Agent 的各种能力（Skills）。
 
-For more information, check out:
-- [What are skills?](https://support.claude.com/en/articles/12512176-what-are-skills)
-- [Using skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude)
-- [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills)
-- [Equipping agents for the real world with Agent Skills](https://anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
+Skills 是指一组指令、脚本和资源的集合，AI 模型（如 Claude）可以动态加载这些 Skills 来完成特定领域的任务，例如文档处理、代码生成或创意设计。
 
-# About This Repository
+## 1. 目录结构规范
 
-This repository contains skills that demonstrate what's possible with Claude's skills system. These skills range from creative applications (art, music, design) to technical tasks (testing web apps, MCP server generation) to enterprise workflows (communications, branding, etc.).
+每个 Skill 都必须是一个独立的文件夹，并包含核心的描述文件。
 
-Each skill is self-contained in its own folder with a `SKILL.md` file containing the instructions and metadata that Claude uses. Browse through these skills to get inspiration for your own skills or to understand different patterns and approaches.
-
-Many skills in this repo are open source (Apache 2.0). We've also included the document creation & editing skills that power [Claude's document capabilities](https://www.anthropic.com/news/create-files) under the hood in the [`skills/docx`](./skills/docx), [`skills/pdf`](./skills/pdf), [`skills/pptx`](./skills/pptx), and [`skills/xlsx`](./skills/xlsx) subfolders. These are source-available, not open source, but we wanted to share these with developers as a reference for more complex skills that are actively used in a production AI application.
-
-## Disclaimer
-
-**These skills are provided for demonstration and educational purposes only.** While some of these capabilities may be available in Claude, the implementations and behaviors you receive from Claude may differ from what is shown in these skills. These skills are meant to illustrate patterns and possibilities. Always test skills thoroughly in your own environment before relying on them for critical tasks.
-
-# Skill Sets
-- [./skills](./skills): Skill examples for Creative & Design, Development & Technical, Enterprise & Communication, and Document Skills
-- [./spec](./spec): The Agent Skills specification
-- [./template](./template): Skill template
-
-# Try in Claude Code, Claude.ai, and the API
-
-## Claude Code
-You can register this repository as a Claude Code Plugin marketplace by running the following command in Claude Code:
-```
-/plugin marketplace add anthropics/skills
+### 标准结构示例
+```text
+skills/
+└── my-skill-name/          <-- Skill 文件夹 (名称必须为小写, 用连字符分隔)
+    ├── SKILL.md            <-- [必须] 核心定义文件 (包含 YAML 头信息和 Markdown 指令)
+    ├── scripts/            <-- [可选] 辅助脚本 (Python, Node.js 等)
+    └── resources/          <-- [可选] 静态资源文件 (模板, 图片等)
 ```
 
-Then, to install a specific set of skills:
-1. Select `Browse and install plugins`
-2. Select `anthropic-agent-skills`
-3. Select `document-skills` or `example-skills`
-4. Select `Install now`
-
-Alternatively, directly install either Plugin via:
-```
-/plugin install document-skills@anthropic-agent-skills
-/plugin install example-skills@anthropic-agent-skills
-```
-
-After installing the plugin, you can use the skill by just mentioning it. For instance, if you install the `document-skills` plugin from the marketplace, you can ask Claude Code to do something like: "Use the PDF skill to extract the form fields from `path/to/some-file.pdf`"
-
-## Claude.ai
-
-These example skills are all already available to paid plans in Claude.ai. 
-
-To use any skill from this repository or upload custom skills, follow the instructions in [Using skills in Claude](https://support.claude.com/en/articles/12512180-using-skills-in-claude#h_a4222fa77b).
-
-## Claude API
-
-You can use Anthropic's pre-built skills, and upload custom skills, via the Claude API. See the [Skills API Quickstart](https://docs.claude.com/en/api/skills-guide#creating-a-skill) for more.
-
-# Creating a Basic Skill
-
-Skills are simple to create - just a folder with a `SKILL.md` file containing YAML frontmatter and instructions. You can use the **template-skill** in this repository as a starting point:
-
+### SKILL.md 格式要求
+`SKILL.md` 文件必须以 YAML frontmatter 开头：
 ```markdown
 ---
-name: my-skill-name
-description: A clear description of what this skill does and when to use it
+name: my-skill-name        # 必须与文件夹名称一致
+description: 简短描述这个 Skill 的功能和适用场景
 ---
 
 # My Skill Name
 
-[Add your instructions here that Claude will follow when this skill is active]
-
-## Examples
-- Example usage 1
-- Example usage 2
-
-## Guidelines
-- Guideline 1
-- Guideline 2
+[详细的 Prompt 指令内容...]
 ```
 
-The frontmatter requires only two fields:
-- `name` - A unique identifier for your skill (lowercase, hyphens for spaces)
-- `description` - A complete description of what the skill does and when to use it
+---
 
-The markdown content below contains the instructions, examples, and guidelines that Claude will follow. For more details, see [How to create custom skills](https://support.claude.com/en/articles/12512198-creating-custom-skills).
+## 2. 安装与使用指南
 
-# Partner Skills
+本项目支持两种主流的使用场景：**Claude Code** (命令行工具) 和 **Open Code** (开源环境)。
 
-Skills are a great way to teach Claude how to get better at using specific pieces of software. As we see awesome example skills from partners, we may highlight some of them here:
+### 场景 A: Claude Code (Marketplace 模式)
 
-- **Notion** - [Notion Skills for Claude](https://www.notion.so/notiondevs/Notion-Skills-for-Claude-28da4445d27180c7af1df7d8615723d0)
+在 Claude Code 中，Skills 是通过 Marketplace 插件的形式加载的。
+
+#### 核心机制：白名单
+本项目根目录下的 `.claude-plugin/marketplace.json` 文件充当了 **白名单**。
+*   **注意**：在 `skills/` 目录下添加新文件夹 **不会** 自动对 Claude Code 可见。
+*   **必须**：您必须在 `marketplace.json` 的 `plugins` 列表中显式添加该 Skill 的配置，Claude Code 才能识别和安装它。
+
+#### 安装步骤
+1.  **注册 Marketplace**:
+    在 Claude Code 终端运行：
+    ```bash
+    /plugin marketplace add src  # 如果是在当前目录运行
+    # 或者指定绝对路径
+    /plugin marketplace add /path/to/this/repo
+    ```
+
+2.  **安装 Skill**:
+    ```bash
+    /plugin install docx      # 安装单个 Skill
+    /plugin install pdf       # 安装单个 Skill
+    ```
+    *提示：运行 `/plugin list` 可以查看当前已安装的 Skill。*
+
+---
+
+### 场景 B: Open Code (独立环境)
+
+Open Code 等开源工具通常通过读取本地特定的配置文件目录来加载 Skills。本项目提供了一个自动化脚本，方便您将 Skills 同步到 Open Code 的配置环境中。
+
+#### 安装脚本
+我们提供了一个功能完备的 Python 脚本 `opencode-installer/manage_skills.py`，它不仅可以安装 Skill，还支持查看列表和删除。
+
+该脚本执行 **安装** 操作时，采用 **全量覆盖** 模式（先删除目标文件夹，再复制新文件），以确保您的环境始终是最新的。
+
+#### 使用方法
+
+1.  **安装/更新 Skill** (覆盖模式):
+    ```bash
+    # 安装/更新单个 Skill
+    python3 opencode-installer/manage_skills.py install pdf
+    
+    # 安装/更新所有 Skills
+    python3 opencode-installer/manage_skills.py install --all
+    ```
+    *这将把 `skills/pdf` 同步到 `~/.config/opencode/skills/pdf`。*
+
+2.  **查看已安装列表**:
+    ```bash
+    python3 opencode-installer/manage_skills.py list
+    ```
+
+3.  **删除 Skill**:
+    ```bash
+    python3 opencode-installer/manage_skills.py remove pdf
+    ```
+
+4.  **查看帮助**:
+    ```bash
+    python3 opencode-installer/manage_skills.py --help
+    ```
+
+---
+
+## 3. 开发须知
+
+如果您想添加一个新的 Skill：
+
+1.  在 `skills/` 下创建一个新文件夹（例如 `my-new-tool`）。
+2.  在该文件夹内创建 `SKILL.md`，并按照规范编写。
+3.  **(针对 Open Code)**: 直接运行 `python3 opencode-installer/install.py my-new-tool` 即可测试。
+4.  **(针对 Claude Code)**: 编辑 `.claude-plugin/marketplace.json`，在 `plugins` 数组中添加一项：
+    ```json
+    {
+      "name": "my-new-tool",
+      "description": "Your description here",
+      "source": "./skills/my-new-tool"
+    }
+    ```
+
+## 4. 常见问题
+
+**Q: 我在 skills 目录下加了文件，为什么 Claude Code 看不到？**
+A: 请检查 `.claude-plugin/marketplace.json`。Claude Code 只加载该文件中列出的插件。这是为了防止未完成的草稿代码意外被加载。
+
+**Q: opencode-installer 会覆盖我的修改吗？**
+A: **是的**。为了保持版本一致性，该脚本在安装时会先删除目标目录中的旧版本。请始终在本项目 (`skills/` 目录) 中进行修改，然后使用脚本发布到 Open Code 环境。
