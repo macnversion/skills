@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Unified Skills Manager for Open Code and Antigravity
+Install, list, and remove skills across different AI assistants.
+"""
 import os
 import sys
 import shutil
@@ -6,24 +10,40 @@ import argparse
 from pathlib import Path
 
 def get_source_skills_dir():
-    # Assumes script is in <repo>/opencode-installer/manage_skills.py
-    # Skills are in <repo>/skills
+    """Get the source directory containing available skills."""
     script_dir = Path(__file__).resolve().parent
     repo_root = script_dir.parent
-    skills_dir = repo_root / "skills"
     
-    if not skills_dir.exists() or not skills_dir.is_dir():
-        print(f"Error: Could not locate source skills directory at {skills_dir}")
+    if not repo_root.exists() or not repo_root.is_dir():
+        print(f"Error: Could not locate source skills directory at {repo_root}")
         sys.exit(1)
         
-    return skills_dir
+    return repo_root
 
-def get_dest_skills_dir():
-    # Default Open Code global skills directory
-    dest_dir = Path.home() / ".config" / "opencode" / "skills"
-    return dest_dir
+def get_dest_skills_dir(target, scope="global"):
+    """Get destination directory based on target (opencode/antigravity) and scope."""
+    if target == "opencode":
+        # Open Code only has global scope
+        return Path.home() / ".config" / "opencode" / "skills"
+    elif target == "antigravity":
+        if scope == "global":
+            return Path.home() / ".gemini" / "antigravity" / "skills"
+        else:  # workspace
+            # Find .agent directory by searching upward from current directory
+            current = Path.cwd()
+            while current != current.parent:
+                agent_dir = current / ".agent"
+                if agent_dir.exists() and agent_dir.is_dir():
+                    return agent_dir / "skills"
+                current = current.parent
+            # If not found, use current directory
+            return Path.cwd() / ".agent" / "skills"
+    else:
+        print(f"Error: Invalid target '{target}'")
+        sys.exit(1)
 
 def list_installed_skills(dest_root):
+    """List all installed skills in the destination directory."""
     if not dest_root.exists():
         print("No skills installed yet (destination directory does not exist).")
         return
@@ -35,13 +55,14 @@ def list_installed_skills(dest_root):
     else:
         print(f"Installed Skills ({len(skills)}):")
         for skill in sorted(skills):
-            print(f" - {skill}")
+            print(f"  - {skill}")
 
-def install_skill(plugin_name, source_path, dest_path):
-    print(f"Installing '{plugin_name}'...")
+def install_skill(skill_name, source_path, dest_path):
+    """Install a single skill."""
+    print(f"Installing '{skill_name}'...")
     
     if not source_path.exists():
-        print(f"  Warning: Source skill '{plugin_name}' not found at {source_path}. Skipping.")
+        print(f"  Warning: Source skill '{skill_name}' not found at {source_path}. Skipping.")
         return False
 
     try:
@@ -59,14 +80,15 @@ def install_skill(plugin_name, source_path, dest_path):
         return True
         
     except Exception as e:
-        print(f"  ❌ Error installing {plugin_name}: {e}")
+        print(f"  ❌ Error installing {skill_name}: {e}")
         return False
 
-def remove_skill(plugin_name, dest_path):
-    print(f"Removing '{plugin_name}'...")
+def remove_skill(skill_name, dest_path):
+    """Remove a single skill."""
+    print(f"Removing '{skill_name}'...")
     
     if not dest_path.exists():
-        print(f"  Warning: Skill '{plugin_name}' is not installed (path {dest_path} not found). Skipping.")
+        print(f"  Warning: Skill '{skill_name}' is not installed (path {dest_path} not found). Skipping.")
         return False
         
     try:
@@ -74,15 +96,47 @@ def remove_skill(plugin_name, dest_path):
         print(f"  ✅ Successfully removed {dest_path}")
         return True
     except Exception as e:
-        print(f"  ❌ Error removing {plugin_name}: {e}")
+        print(f"  ❌ Error removing {skill_name}: {e}")
         return False
 
 def main():
-    parser = argparse.ArgumentParser(description="Manage Open Code skills (Install, List, Remove).")
+    parser = argparse.ArgumentParser(
+        description="Unified Skills Manager for Open Code and Antigravity.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Install all skills to Open Code
+  %(prog)s install --all --target opencode
+  
+  # Install a specific skill to Antigravity (global)
+  %(prog)s install git-formatter --target antigravity
+  
+  # Install to Antigravity workspace
+  %(prog)s install git-formatter --target antigravity --scope workspace
+  
+  # List installed skills
+  %(prog)s list --target opencode
+  %(prog)s list --target antigravity --scope workspace
+        """
+    )
+    
+    parser.add_argument(
+        "--target", 
+        choices=["opencode", "antigravity"], 
+        required=True,
+        help="Target AI assistant (opencode or antigravity)"
+    )
+    parser.add_argument(
+        "--scope", 
+        choices=["global", "workspace"], 
+        default="global",
+        help="Scope for Antigravity installation (ignored for Open Code)"
+    )
+    
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # Install Command
-    install_parser = subparsers.add_parser("install", help="Install or Update (Overwrite) skills")
+    install_parser = subparsers.add_parser("install", help="Install or update skills")
     install_parser.add_argument("skill", nargs="?", help="Name of the skill to install")
     install_parser.add_argument("-a", "--all", action="store_true", help="Install ALL available skills")
 
@@ -100,12 +154,21 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    source_root = get_source_skills_dir()
-    dest_root = get_dest_skills_dir()
+    # Validate scope for opencode
+    if args.target == "opencode" and args.scope == "workspace":
+        print("Warning: Open Code does not support workspace scope. Using global scope.")
+        args.scope = "global"
 
+    source_root = get_source_skills_dir()
+    dest_root = get_dest_skills_dir(args.target, args.scope)
+
+    print("=" * 60)
+    print(f"Target:      {args.target.upper()}")
     print(f"Source:      {source_root}")
     print(f"Destination: {dest_root}")
-    print("-" * 50)
+    if args.target == "antigravity":
+        print(f"Scope:       {args.scope.upper()}")
+    print("=" * 60)
 
     if args.command == "list":
         list_installed_skills(dest_root)
@@ -116,9 +179,12 @@ def main():
             sys.exit(1)
             
         if args.all:
+            # Exclude installer directories
             skills_to_install = [
                 d.name for d in source_root.iterdir() 
-                if d.is_dir() and not d.name.startswith(".")
+                if d.is_dir() 
+                and not d.name.startswith(".") 
+                and d.name not in ["skills-manager", "antigravity-installer", "opencode-installer"]
             ]
             print(f"Found {len(skills_to_install)} skills to install.")
         else:
@@ -130,7 +196,7 @@ def main():
             dst = dest_root / skill_name
             if install_skill(skill_name, src, dst):
                 success_count += 1
-        print("-" * 50)
+        print("=" * 60)
         print(f"Done. Installed {success_count}/{len(skills_to_install)} skills.")
 
     elif args.command == "remove":
@@ -156,7 +222,7 @@ def main():
             dst = dest_root / skill_name
             if remove_skill(skill_name, dst):
                 success_count += 1
-        print("-" * 50)
+        print("=" * 60)
         print(f"Done. Removed {success_count}/{len(skills_to_remove)} skills.")
 
 if __name__ == "__main__":

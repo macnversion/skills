@@ -63,12 +63,16 @@ description: 简短描述这个 Skill 的功能和适用场景
 
 ---
 
-### 场景 B: Open Code (独立环境)
+### 场景 B: Open Code / Antigravity (独立环境)
 
-Open Code 等开源工具通常通过读取本地特定的配置文件目录来加载 Skills。本项目提供了一个自动化脚本，方便您将 Skills 同步到 Open Code 的配置环境中。
+Open Code 和 Antigravity 等工具通常通过读取本地特定的配置文件目录来加载 Skills。本项目提供了一个统一的自动化脚本，方便您将 Skills 同步到不同 AI 助手的配置环境中。
 
-#### 安装脚本
-我们提供了一个功能完备的 Python 脚本 `opencode-installer/manage_skills.py`，它不仅可以安装 Skill，还支持查看列表和删除。
+#### Skills Manager 工具
+我们提供了一个统一的 Python 脚本 `skills-manager/manage_skills.py`，它支持：
+- ✅ Open Code 和 Antigravity 两种目标
+- ✅ 全局 (Global) 和工作区 (Workspace) 两种作用域
+- ✅ 安装、列出、移除操作
+- ✅ 覆盖式更新，确保版本一致
 
 该脚本执行 **安装** 操作时，采用 **全量覆盖** 模式（先删除目标文件夹，再复制新文件），以确保您的环境始终是最新的。
 
@@ -76,28 +80,43 @@ Open Code 等开源工具通常通过读取本地特定的配置文件目录来�
 
 1.  **安装/更新 Skill** (覆盖模式):
     ```bash
-    # 安装/更新单个 Skill
-    python3 opencode-installer/manage_skills.py install pdf
+    # Open Code: 安装单个 Skill
+    python3 skills-manager/manage_skills.py install pdf --target opencode
     
-    # 安装/更新所有 Skills
-    python3 opencode-installer/manage_skills.py install --all
+    # Open Code: 安装所有 Skills
+    python3 skills-manager/manage_skills.py install --all --target opencode
+    
+    # Antigravity: 安装到全局
+    python3 skills-manager/manage_skills.py install pdf --target antigravity
+    
+    # Antigravity: 安装到工作区
+    python3 skills-manager/manage_skills.py install pdf --target antigravity --scope workspace
     ```
-    *这将把 `skills/pdf` 同步到 `~/.config/opencode/skills/pdf`。*
 
 2.  **查看已安装列表**:
     ```bash
-    python3 opencode-installer/manage_skills.py list
+    # Open Code
+    python3 skills-manager/manage_skills.py list --target opencode
+    
+    # Antigravity (全局)
+    python3 skills-manager/manage_skills.py list --target antigravity
+    
+    # Antigravity (工作区)
+    python3 skills-manager/manage_skills.py list --target antigravity --scope workspace
     ```
 
 3.  **删除 Skill**:
     ```bash
-    python3 opencode-installer/manage_skills.py remove pdf
+    python3 skills-manager/manage_skills.py remove pdf --target opencode
+    python3 skills-manager/manage_skills.py remove pdf --target antigravity
     ```
 
 4.  **查看帮助**:
     ```bash
-    python3 opencode-installer/manage_skills.py --help
+    python3 skills-manager/manage_skills.py --help
     ```
+
+详细使用说明请参考 [skills-manager/README.md](skills-manager/README.md)。
 
 ---
 
@@ -107,7 +126,7 @@ Open Code 等开源工具通常通过读取本地特定的配置文件目录来�
 
 1.  在 `skills/` 下创建一个新文件夹（例如 `my-new-tool`）。
 2.  在该文件夹内创建 `SKILL.md`，并按照规范编写。
-3.  **(针对 Open Code)**: 直接运行 `python3 opencode-installer/install.py my-new-tool` 即可测试。
+3.  **(针对 Open Code / Antigravity)**: 直接运行 `python3 skills-manager/manage_skills.py install my-new-tool --target <opencode|antigravity>` 即可测试。
 4.  **(针对 Claude Code)**: 编辑 `.claude-plugin/marketplace.json`，在 `plugins` 数组中添加一项：
     ```json
     {
@@ -117,10 +136,57 @@ Open Code 等开源工具通常通过读取本地特定的配置文件目录来�
     }
     ```
 
-## 4. 常见问题
+## 4. Skills Manager 详细使用指南
+
+### 作用域说明
+
+#### Open Code
+- **Global**: `~/.config/opencode/skills/`
+- Open Code 仅支持全局作用域
+
+#### Antigravity
+- **Global**: `~/.gemini/antigravity/skills/` - 所有项目可用
+- **Workspace**: `<项目>/.agent/skills/` - 仅当前项目可用
+
+### 快速命令参考
+
+| 操作 | Open Code | Antigravity (Global) | Antigravity (Workspace) |
+|------|-----------|---------------------|-------------------------|
+| 安装单个 | `--target opencode install <name>` | `--target antigravity install <name>` | `--target antigravity --scope workspace install <name>` |
+| 安装所有 | `--target opencode install --all` | `--target antigravity install --all` | `--target antigravity --scope workspace install --all` |
+| 列出已安装 | `--target opencode list` | `--target antigravity list` | `--target antigravity --scope workspace list` |
+| 移除单个 | `--target opencode remove <name>` | `--target antigravity remove <name>` | `--target antigravity --scope workspace remove <name>` |
+| 移除所有 | `--target opencode remove --all` | `--target antigravity remove --all` | `--target antigravity --scope workspace remove --all` |
+
+### 迁移指南
+
+如果你之前使用旧的安装器，可以这样迁移：
+
+```bash
+# 从 opencode-installer 迁移
+# 旧: python opencode-installer/manage_skills.py install --all
+# 新: python skills-manager/manage_skills.py --target opencode install --all
+
+# 从 antigravity-installer 迁移
+# 旧: python antigravity-installer/manage_antigravity_skills.py install --all
+# 新: python skills-manager/manage_skills.py --target antigravity install --all
+```
+
+---
+
+## 5. 常见问题
 
 **Q: 我在 skills 目录下加了文件，为什么 Claude Code 看不到？**
 A: 请检查 `.claude-plugin/marketplace.json`。Claude Code 只加载该文件中列出的插件。这是为了防止未完成的草稿代码意外被加载。
 
-**Q: opencode-installer 会覆盖我的修改吗？**
-A: **是的**。为了保持版本一致性，该脚本在安装时会先删除目标目录中的旧版本。请始终在本项目 (`skills/` 目录) 中进行修改，然后使用脚本发布到 Open Code 环境。
+**Q: skills-manager 会覆盖我的修改吗？**
+A: **是的**。为了保持版本一致性，该脚本在安装时会先删除目标目录中的旧版本。请始终在本项目 (`skills/` 目录) 中进行修改，然后使用脚本发布到目标环境。
+
+**Q: 如何更新已安装的 skill？**
+A: 直接重新安装即可，脚本会自动覆盖旧版本：
+```bash
+python skills-manager/manage_skills.py --target <opencode|antigravity> install <skill-name>
+```
+
+**Q: Open Code 支持 Workspace 吗？**
+A: 不支持。Open Code 仅支持全局作用域。如果指定 `--scope workspace`，脚本会自动忽略并使用全局作用域。
