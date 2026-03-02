@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Unified Skills Manager for Open Code and Antigravity
+Unified Skills Manager for Open Code, Antigravity, and Claude Code
 Install, list, and remove skills across different AI assistants.
 """
 import os
@@ -13,15 +13,19 @@ def get_source_skills_dir():
     """Get the source directory containing available skills."""
     script_dir = Path(__file__).resolve().parent
     repo_root = script_dir.parent
-    
+    skills_dir = repo_root / "skills"
+
+    if skills_dir.exists() and skills_dir.is_dir():
+        return skills_dir
+
     if not repo_root.exists() or not repo_root.is_dir():
         print(f"Error: Could not locate source skills directory at {repo_root}")
         sys.exit(1)
-        
+
     return repo_root
 
 def get_dest_skills_dir(target, scope="global"):
-    """Get destination directory based on target (opencode/antigravity) and scope."""
+    """Get destination directory based on target (opencode/antigravity/claude-code) and scope."""
     if target == "opencode":
         # Open Code only has global scope
         return Path.home() / ".config" / "opencode" / "skills"
@@ -38,6 +42,9 @@ def get_dest_skills_dir(target, scope="global"):
                 current = current.parent
             # If not found, use current directory
             return Path.cwd() / ".agent" / "skills"
+    elif target == "claude-code":
+        # Claude Code only has global scope
+        return Path.home() / ".claude" / "skills"
     else:
         print(f"Error: Invalid target '{target}'")
         sys.exit(1)
@@ -101,30 +108,34 @@ def remove_skill(skill_name, dest_path):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Unified Skills Manager for Open Code and Antigravity.",
+        description="Unified Skills Manager for Open Code, Antigravity, and Claude Code.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   # Install all skills to Open Code
   %(prog)s install --all --target opencode
-  
+
   # Install a specific skill to Antigravity (global)
   %(prog)s install git-formatter --target antigravity
-  
+
   # Install to Antigravity workspace
   %(prog)s install git-formatter --target antigravity --scope workspace
-  
+
+  # Install to Claude Code (global only)
+  %(prog)s install git-formatter --target claude-code
+
   # List installed skills
   %(prog)s list --target opencode
   %(prog)s list --target antigravity --scope workspace
+  %(prog)s list --target claude-code
         """
     )
     
     parser.add_argument(
-        "--target", 
-        choices=["opencode", "antigravity"], 
+        "--target",
+        choices=["opencode", "antigravity", "claude-code"],
         required=True,
-        help="Target AI assistant (opencode or antigravity)"
+        help="Target AI assistant (opencode, antigravity, or claude-code)"
     )
     parser.add_argument(
         "--scope", 
@@ -154,9 +165,9 @@ Examples:
         parser.print_help()
         sys.exit(1)
 
-    # Validate scope for opencode
-    if args.target == "opencode" and args.scope == "workspace":
-        print("Warning: Open Code does not support workspace scope. Using global scope.")
+    # Validate scope for opencode and claude-code
+    if args.target in ["opencode", "claude-code"] and args.scope == "workspace":
+        print(f"Warning: {args.target} does not support workspace scope. Using global scope.")
         args.scope = "global"
 
     source_root = get_source_skills_dir()
